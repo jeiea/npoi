@@ -1312,7 +1312,7 @@ namespace NPOI.XSSF.UserModel
          */
         public override int GetHashCode()
         {
-            return _cellXf.ToString().GetHashCode();
+            return GetXml().GetHashCode();
         }
 
         /**
@@ -1326,7 +1326,12 @@ namespace NPOI.XSSF.UserModel
             if (o == null || !(o is XSSFCellStyle)) return false;
 
             XSSFCellStyle cf = (XSSFCellStyle)o;
-            return _cellXf.ToString().Equals(cf.GetCoreXf().ToString());
+            return GetXml().Equals(cf.GetXml());
+        }
+
+        private string GetXml()
+        {
+            return $"{_cellXf}{GetCTFill()}";
         }
 
         /**
