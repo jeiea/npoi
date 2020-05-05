@@ -92,7 +92,7 @@ namespace NPOI.XSSF.Model
                     }
                 }
                 MAXIMUM_NUMBER_OF_DATA_FORMATS = value;
-            }   
+            }
         }
         private StyleSheetDocument doc;
         private XSSFWorkbook workbook;
@@ -245,7 +245,7 @@ namespace NPOI.XSSF.Model
          * @param idx number format id
          * @return number format code
          */
-         [Obsolete("deprecated POI 3.14-beta2. Use {@link #getNumberFormatAt(short)} instead.")]
+        [Obsolete("deprecated POI 3.14-beta2. Use {@link #getNumberFormatAt(short)} instead.")]
         public String GetNumberFormatAt(int idx)
         {
             return GetNumberFormatAt((short)idx);
@@ -372,7 +372,7 @@ namespace NPOI.XSSF.Model
                     {
                         style.applyNumberFormat = false;
                         style.numFmtId = 0;
-                        style.numFmtIdSpecified = false;;
+                        style.numFmtIdSpecified = false; ;
                     }
                 }
             }
@@ -537,7 +537,7 @@ namespace NPOI.XSSF.Model
 
         internal CT_Xf GetCellStyleXfAt(int idx)
         {
-            if (idx < 0 || idx > styleXfs.Count)
+            if (idx < 0 || idx >= styleXfs.Count)
                 return null;
             return styleXfs[idx];
         }
@@ -646,7 +646,7 @@ namespace NPOI.XSSF.Model
             CT_NumFmts formats = new CT_NumFmts();
             formats.count = (uint)numberFormats.Count;
 
-            foreach (KeyValuePair<short, String > entry in numberFormats)
+            foreach (KeyValuePair<short, String> entry in numberFormats)
             {
                 CT_NumFmt ctFmt = formats.AddNewNumFmt();
                 ctFmt.numFmtId = (uint)entry.Key;
@@ -677,9 +677,9 @@ namespace NPOI.XSSF.Model
             }
             ctFills.count = (uint)fills.Count;
             List<CT_Fill> ctf = new List<CT_Fill>(fills.Count);
-            
+
             foreach (XSSFCellFill f in fills)
-                ctf.Add( f.GetCTFill());
+                ctf.Add(f.GetCTFill());
             ctFills.SetFillArray(ctf);
             if (ctFills.count > 0)
                 ctFills.countSpecified = true;
@@ -693,9 +693,9 @@ namespace NPOI.XSSF.Model
             }
             ctBorders.count = (uint)borders.Count;
             List<CT_Border> ctb = new List<CT_Border>(borders.Count);
-            foreach (XSSFCellBorder b in borders) 
+            foreach (XSSFCellBorder b in borders)
                 ctb.Add(b.GetCTBorder());
-            
+
             ctBorders.SetBorderArray(ctb);
             styleSheet.borders = ctBorders;
 
@@ -854,7 +854,7 @@ namespace NPOI.XSSF.Model
             ctXf.fillId = 0;
             ctXf.borderId = 0;
             ctXf.xfId = 0;
-            
+
             int indexXf = PutCellXf(ctXf);
             return new XSSFCellStyle(indexXf - 1, xfSize - 1, this, theme);
         }
@@ -862,8 +862,8 @@ namespace NPOI.XSSF.Model
         /**
          * Finds a font that matches the one with the supplied attributes
          */
-         [Obsolete("deprecated POI 3.15 beta 2. Use {@link #findFont(boolean, short, short, String, boolean, boolean, short, byte)} instead.")]
-        public XSSFFont FindFont(short boldWeight, short color, short fontHeight, String name, bool italic, bool strikeout, FontSuperScript typeOffset,FontUnderlineType underline)
+        [Obsolete("deprecated POI 3.15 beta 2. Use {@link #findFont(boolean, short, short, String, boolean, boolean, short, byte)} instead.")]
+        public XSSFFont FindFont(short boldWeight, short color, short fontHeight, String name, bool italic, bool strikeout, FontSuperScript typeOffset, FontUnderlineType underline)
         {
             foreach (XSSFFont font in fonts)
             {
