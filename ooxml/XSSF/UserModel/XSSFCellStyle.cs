@@ -161,7 +161,7 @@ namespace NPOI.XSSF.UserModel
                         CT_Border border = CT_Border.Parse(src.GetCTBorder().ToString());
                         AddBorder(border);
 
-                        if (src._cellStyleXf.applyBorder)
+                        if (src._cellStyleXf?.applyBorder == true)
                         {
                             _cellStyleXf.borderId = FindAddBorder(src.GetCTBorder());
                         }
@@ -286,9 +286,9 @@ namespace NPOI.XSSF.UserModel
             {
                 CT_Border ct = GetCTBorder();
                 CT_BorderPr pr = ct.IsSetBottom() ? ct.bottom : ct.AddNewBottom();
-                if (value == BorderStyle.None) 
+                if (value == BorderStyle.None)
                     ct.UnsetBottom();
-                else 
+                else
                     pr.style = (ST_BorderStyle)value;
 
                 int idx = _stylesSource.PutBorder(new XSSFCellBorder(ct, _theme));
@@ -462,11 +462,11 @@ namespace NPOI.XSSF.UserModel
          *
          * @param fmt the index of a data format
          */
-            public void SetDataFormat(int fmt)
-            {
-                _cellXf.applyNumberFormat = (true);
-                _cellXf.numFmtId = (uint)(fmt);
-            }
+        public void SetDataFormat(int fmt)
+        {
+            _cellXf.applyNumberFormat = (true);
+            _cellXf.numFmtId = (uint)(fmt);
+        }
         /**
          * Get the contents of the format string, by looking up
          * the StylesSource
@@ -640,7 +640,7 @@ namespace NPOI.XSSF.UserModel
                 XSSFCellFill fill = _stylesSource.GetFillAt(FillIndex);
 
                 ST_PatternType ptrn = fill.GetPatternType();
-                if(ptrn == ST_PatternType.none) return FillPattern.NoFill;
+                if (ptrn == ST_PatternType.none) return FillPattern.NoFill;
 
                 return (FillPattern)((int)ptrn);
                 //return FillPattern.forInt(ptrn.intValue() - 1);  minus one in poi, why???
@@ -799,7 +799,7 @@ namespace NPOI.XSSF.UserModel
                 return border.GetBorderColor(BorderSide.LEFT);
             }
         }
- 
+
         /// <summary>
         /// Get whether the cell's using this style are locked
         /// </summary>
@@ -1356,12 +1356,12 @@ namespace NPOI.XSSF.UserModel
         {
             get
             {
-               CT_CellAlignment align = _cellXf.alignment;
-               return align != null && align.shrinkToFit;
+                CT_CellAlignment align = _cellXf.alignment;
+                return align != null && align.shrinkToFit;
             }
             set
             {
-               GetCTCellAlignment().shrinkToFit = value;
+                GetCTCellAlignment().shrinkToFit = value;
             }
         }
 
